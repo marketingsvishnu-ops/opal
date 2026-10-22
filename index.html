@@ -1,420 +1,455 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>OBSIDIAN — Performance Club</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+<title>Demo</title>
 
 <style>
-:root{
-  --black:#101113;
-  --white:#f5f5f2;
-  --blue:#345dff;
-  --grey:#999ba4;
-  --line:#303137;
-  --panel:#191a1e;
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial,sans-serif;
 }
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--white);font-family:'Space Grotesk',sans-serif}
-a{color:inherit;text-decoration:none}
-button,input{font:inherit}
-.container{width:min(1180px,90%);margin:auto}
-.oswald{font-family:'Oswald',sans-serif;text-transform:uppercase}
-.blue{color:var(--blue)}
-.eyebrow{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--blue);font-weight:700}
-.btn{
- display:inline-flex;align-items:center;justify-content:space-between;gap:25px;
- background:var(--blue);color:white;padding:15px 19px;border:1px solid var(--blue);
- font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:.25s
+
+body{
+  background:#0f1020;
+  color:white;
 }
-.btn:hover{background:transparent;color:white;transform:translateY(-3px)}
-.btn.ghost{background:transparent;border-color:#55565c}
-.btn.ghost:hover{border-color:var(--blue);color:#fff}
-header{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center}
-.nav{display:flex;align-items:center;justify-content:space-between;gap:25px}
-.logo{font:700 23px 'Oswald',sans-serif;letter-spacing:2px}
-.logo span{color:var(--blue)}
-.logo small{display:block;font:500 8px 'Space Grotesk',sans-serif;letter-spacing:4px;color:var(--grey)}
-.navlinks{display:flex;gap:28px}
-.navlinks a{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:#c3c4ca}
-.navlinks a:hover{color:var(--blue)}
-.menu{display:none;background:none;border:0;color:white;font-size:24px}
 
-.hero{min-height:680px;display:flex;align-items:center;position:relative;overflow:hidden}
-.hero:after{
- content:"";position:absolute;width:550px;height:550px;right:-150px;top:40px;
- background:var(--blue);filter:blur(180px);opacity:.2;border-radius:50%
+.container{
+  display:flex;
+  flex-direction:row-reverse;
+  min-height:100vh;
 }
-.hero-grid{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:35px;padding:65px 0;position:relative;z-index:1}
-.hero h1{font:700 clamp(72px,10vw,132px)/.83 'Oswald',sans-serif;letter-spacing:-2px;text-transform:uppercase;margin-top:24px}
-.hero h1 .outline{color:transparent;-webkit-text-stroke:1px var(--white)}
-.hero h1 .blue-line{color:var(--blue)}
-.hero p{font-size:12px;line-height:2;color:var(--grey);max-width:390px;margin:27px 0}
-.actions{display:flex;gap:12px;flex-wrap:wrap}
-.stats{display:flex;gap:30px;margin-top:42px}
-.stat{padding-left:13px;border-left:2px solid var(--blue)}
-.stat strong{display:block;font:600 32px 'Oswald',sans-serif}
-.stat span{font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--grey)}
 
-.visual{height:480px;position:relative;display:grid;place-items:center}
-.visual-box{position:absolute;inset:25px 20px 25px 35px;border:1px solid #383b48;transform:rotate(4deg)}
-.visual-core{
- width:250px;height:300px;position:relative;z-index:2;
- background:linear-gradient(140deg,#6480ff 0%,#345dff 36%,#111d55 100%);
- clip-path:polygon(50% 0,93% 22%,100% 65%,50% 100%,0 65%,7% 22%);
- box-shadow:0 0 100px rgba(52,93,255,.35);
- display:grid;place-items:center;animation:float 5s ease-in-out infinite
+.demo{
+  width:70%;
+  background:#111;
+  position:relative;
 }
-.visual-core span{font:700 130px 'Oswald',sans-serif;color:rgba(255,255,255,.92);transform:rotate(-8deg)}
-.ring{position:absolute;width:370px;height:370px;border:1px solid rgba(52,93,255,.65);border-radius:50%;animation:spin 18s linear infinite}
-.ring:before{content:"";position:absolute;inset:28px;border:1px solid rgba(255,255,255,.16);border-radius:50%}
-.ring.second{width:420px;height:220px;transform:rotate(45deg);border-color:rgba(255,255,255,.2);animation-duration:24s;animation-direction:reverse}
-.ring.third{width:210px;height:430px;transform:rotate(-35deg);border-color:rgba(52,93,255,.25);animation-duration:30s}
-.visual-tag{position:absolute;z-index:3;background:var(--white);color:var(--black);padding:11px 14px;font:600 16px 'Oswald',sans-serif;text-transform:uppercase;transform:rotate(-5deg)}
-.visual-tag.one{top:42px;right:0}
-.visual-tag.two{bottom:37px;left:0;background:var(--blue);color:white;transform:rotate(4deg)}
-.visual-index{position:absolute;top:15px;left:0;font-size:9px;letter-spacing:2px;color:var(--grey)}
-@keyframes spin{to{rotate:360deg}}
-@keyframes float{50%{transform:translateY(-12px) rotate(3deg)}}
 
-.ticker{background:var(--blue);padding:13px 0;overflow:hidden;transform:rotate(-1deg) scale(1.02)}
-.ticker-track{display:flex;width:max-content;animation:scroll 26s linear infinite}
-.ticker span{font:600 23px 'Oswald',sans-serif;text-transform:uppercase;white-space:nowrap;padding:0 18px}
-@keyframes scroll{to{transform:translateX(-50%)}}
-
-.section{padding:100px 0}
-.heading{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:45px}
-.title{font:600 clamp(48px,7.8vw,88px)/.9 'Oswald',sans-serif;text-transform:uppercase}
-.heading p{font-size:12px;line-height:1.9;color:var(--grey);max-width:330px}
-.workouts{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.workout{background:var(--panel);border:1px solid var(--line);padding:25px;min-height:335px;position:relative;transition:.3s;overflow:hidden}
-.workout:hover{border-color:var(--blue);transform:translateY(-6px)}
-.workout-num{font-size:10px;color:var(--blue);letter-spacing:2px}
-.workout-symbol{height:125px;display:grid;place-items:center;font:600 85px 'Oswald',sans-serif;color:var(--blue)}
-.workout h3{font:600 32px 'Oswald',sans-serif;text-transform:uppercase;margin-bottom:9px}
-.workout p{font-size:11px;line-height:1.9;color:var(--grey)}
-.workout-foot{position:absolute;bottom:20px;left:25px;right:25px;border-top:1px solid var(--line);padding-top:13px;display:flex;justify-content:space-between;font-size:9px;text-transform:uppercase;letter-spacing:1px}
-.workout-foot b{font-size:16px;color:var(--blue)}
-
-.statement{padding:0 0 100px}
-.statement-box{background:#e9eaf0;color:var(--black);padding:55px;display:grid;grid-template-columns:1fr .8fr;gap:30px;align-items:center;position:relative;overflow:hidden}
-.statement-box:after{content:"O";position:absolute;right:-20px;bottom:-200px;font:700 430px 'Oswald',sans-serif;color:rgba(52,93,255,.07)}
-.statement-box h2{font:600 clamp(55px,8vw,96px)/.87 'Oswald',sans-serif;text-transform:uppercase;position:relative;z-index:1}
-.statement-box p{font-size:12px;line-height:2;position:relative;z-index:1}
-.statement-box .btn{margin-top:23px;position:relative;z-index:1}
-
-.memberships{background:#151619}
-.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.plan{padding:30px 25px;border:1px solid var(--line);position:relative}
-.plan.popular{border-color:var(--blue);background:#191d2c}
-.badge{position:absolute;right:0;top:0;background:var(--blue);padding:8px 10px;font-size:8px;font-weight:700;letter-spacing:1px}
-.plan h3{font:600 27px 'Oswald',sans-serif;text-transform:uppercase}
-.price{font:600 61px 'Oswald',sans-serif;margin-top:24px}
-.price small{font:400 11px 'Space Grotesk',sans-serif;color:var(--grey)}
-.plan-desc{font-size:11px;color:var(--grey);margin-bottom:25px}
-.plan ul{list-style:none;display:grid;gap:15px;margin-bottom:30px}
-.plan li{font-size:11px;color:#d2d3d9}
-.plan li:before{content:"+";color:var(--blue);font-weight:700;margin-right:10px}
-.plan .btn{width:100%}
-
-.bmi-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
-.bmi-copy{font-size:12px;line-height:2;color:var(--grey);max-width:400px;margin-top:22px}
-.bmi-card{background:var(--panel);border:1px solid var(--line);padding:30px}
-.bmi-card h3{font:600 28px 'Oswald',sans-serif;text-transform:uppercase;margin-bottom:25px}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:15px}
-.field label{display:block;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--grey);margin-bottom:9px}
-.field input{width:100%;background:var(--black);border:1px solid var(--line);color:white;padding:14px;outline:none}
-.field input:focus{border-color:var(--blue)}
-.bmi-card .btn{width:100%;margin-top:18px}
-.result{display:none;border:1px solid var(--blue);padding:20px;margin-top:20px}
-.result strong{display:block;font:600 48px 'Oswald',sans-serif;color:#7790ff}
-.result p{font-size:12px;line-height:1.8;color:var(--grey)}
-.note{font-size:10px;line-height:1.8;color:var(--grey);margin-top:15px}
-
-.contact{background:var(--blue);padding:55px 0}
-.contact-row{display:flex;justify-content:space-between;align-items:center;gap:25px}
-.contact h2{font:600 clamp(45px,7vw,80px)/.88 'Oswald',sans-serif;text-transform:uppercase}
-.contact p{font-size:11px;margin-top:13px}
-.contact .btn{background:var(--black);border-color:var(--black)}
-.contact .btn:hover{background:transparent;color:white}
-footer{padding:30px 0}
-.footer-row{display:flex;align-items:center;justify-content:space-between;gap:20px}
-.footer-note{font-size:10px;color:var(--grey)}
-.socials{display:flex;gap:18px;font-size:10px;text-transform:uppercase}
-.socials a:hover{color:var(--blue)}
-.reveal{opacity:0;transform:translateY(22px);transition:.7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-@media(max-width:800px){
- .navlinks{display:none;position:absolute;top:77px;left:0;right:0;background:var(--black);padding:25px 5%;flex-direction:column;gap:20px;border-bottom:1px solid var(--line)}
- .navlinks.open{display:flex}
- .menu{display:block}
- .nav-cta{display:none}
- .hero-grid{grid-template-columns:1fr;padding:65px 0 45px}
- .hero h1{font-size:clamp(80px,16vw,125px)}
- .visual{height:390px}
- .ring{width:290px;height:290px}
- .ring.second{width:340px;height:180px}
- .ring.third{height:350px;width:170px}
- .visual-core{width:180px;height:230px}
- .visual-core span{font-size:100px}
- .section{padding:75px 0}
- .heading{flex-direction:column;align-items:start}
- .workouts,.plans{grid-template-columns:1fr}
- .workout{min-height:300px}
- .statement{padding-bottom:75px}
- .statement-box{grid-template-columns:1fr;padding:35px}
- .bmi-grid{grid-template-columns:1fr;gap:30px}
- .contact-row{align-items:flex-start;flex-direction:column}
+iframe{
+  width:100%;
+  height:100vh;
+  border:none;
 }
-@media(max-width:450px){
- .hero h1{letter-spacing:-1px}
- .stats{gap:16px}
- .stat strong{font-size:26px}
- .visual{height:320px}
- .ring{width:230px;height:230px}
- .ring.second{width:270px;height:140px}
- .ring.third{height:280px;width:140px}
- .visual-core{width:145px;height:190px}
- .visual-core span{font-size:80px}
- .fields{grid-template-columns:1fr}
- .bmi-card{padding:20px}
- .footer-row{align-items:flex-start;flex-direction:column}
- .statement-box{padding:25px}
+
+.right{
+  width:30%;
+  padding:30px 22px;
+  background:linear-gradient(180deg,#181a35,#0b0c18);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow-y:auto;
 }
+
+.box{
+  width:100%;
+  background:rgba(10,10,10,.88);
+  border:1px solid #d4af37;
+  border-radius:22px;
+  padding:26px 20px;
+  text-align:center;
+  box-shadow:0 0 35px rgba(212,175,55,.28);
+}
+
+.badge{
+  display:inline-block;
+  background:#d4af37;
+  color:#111;
+  padding:8px 18px;
+  border-radius:30px;
+  font-weight:800;
+  margin-bottom:16px;
+}
+
+h1{
+  font-size:34px;
+  color:#ffd86b;
+  margin-bottom:10px;
+  text-transform:uppercase;
+}
+
+.sub{
+  font-size:17px;
+  line-height:1.5;
+  margin-bottom:22px;
+  color:#eee;
+}
+
+.features{
+  display:grid;
+  gap:12px;
+  margin:22px 0;
+}
+
+.feature{
+  background:linear-gradient(90deg,#1b1b1b,#2b2208);
+  border:1px solid rgba(212,175,55,.55);
+  padding:14px;
+  border-radius:14px;
+  font-size:17px;
+  font-weight:700;
+}
+
+.feature span{
+  color:#ffd86b;
+}
+
+/* Signup Button */
+.signup-btn{
+  display:inline-block;
+  margin-top:8px;
+  padding:9px 16px;
+  background:#25D366;
+  color:#fff;
+  text-decoration:none;
+  border-radius:9px;
+  font-size:15px;
+  font-weight:800;
+  border:1px solid #1ebe5d;
+  transition:.3s;
+}
+
+.signup-btn:hover{
+  background:#1ebe5d;
+  transform:scale(1.03);
+}
+
+.website-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
+  font-size:14px;
+  font-weight:bold;
+}
+
+.website-row a{
+  text-decoration:none;
+}
+
+.website{
+  color:#25D366;
+}
+
+.whatsapp-small{
+  color:#ffd86b;
+}
+
+.cta{
+  display:block;
+  background:#25D366;
+  color:#fff;
+  text-decoration:none;
+  padding:17px;
+  border-radius:16px;
+  font-size:20px;
+  font-weight:900;
+  margin-top:22px;
+  box-shadow:0 8px 18px rgba(37,211,102,.35);
+  transition:.3s;
+}
+
+.cta:hover{
+  transform:scale(1.03);
+  background:#1ebe5d;
+}
+
+/* Floating Signup Button */
+.floating-signup{
+  position:absolute;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:50;
+  background:#ff1744;
+  color:#fff;
+  padding:12px 24px;
+  border-radius:8px;
+  font-size:18px;
+  font-weight:900;
+  border:3px solid #fff;
+  cursor:pointer;
+  box-shadow:0 8px 20px rgba(255,23,68,0.6);
+  transition:.3s;
+  text-decoration:none;
+  display:inline-block;
+}
+
+.floating-signup:hover{
+  transform:translateX(-50%) scale(1.08);
+  background:#ff5722;
+  box-shadow:0 12px 25px rgba(255,23,68,0.8);
+}
+
+.trust{
+  margin-top:16px;
+  color:#ccc;
+  font-size:14px;
+  line-height:1.5;
+}
+
+.footer{
+  margin-top:18px;
+  font-size:12px;
+  color:#aaa;
+  line-height:1.5;
+}
+
+.bonus-popup{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.78);
+}
+
+.bonus-popup[hidden]{
+  display:none;
+}
+
+.bonus-dialog{
+  position:relative;
+  width:min(100%,420px);
+  padding:34px 24px 28px;
+  border:2px solid #d4af37;
+  border-radius:16px;
+  background:linear-gradient(145deg,#24210f,#111218 70%);
+  text-align:center;
+  box-shadow:0 18px 60px rgba(0,0,0,.65);
+  animation:popup-enter .24s ease-out;
+}
+
+.bonus-close{
+  position:absolute;
+  top:8px;
+  right:12px;
+  border:0;
+  background:transparent;
+  color:#ddd;
+  font-size:28px;
+  line-height:1;
+  cursor:pointer;
+}
+
+.bonus-dialog h2{
+  margin-bottom:10px;
+  color:#ffd86b;
+  font-size:30px;
+}
+
+.bonus-dialog p{
+  margin-bottom:22px;
+  color:#eee;
+  line-height:1.5;
+}
+
+.bonus-claim{
+  display:block;
+  padding:14px 18px;
+  border-radius:8px;
+  background:#25D366;
+  color:#fff;
+  font-size:17px;
+  font-weight:800;
+  text-decoration:none;
+}
+
+.bonus-claim:hover{
+  background:#1ebe5d;
+}
+
+@keyframes popup-enter{
+  from{opacity:0;transform:translateY(10px) scale(.97)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
 @media(prefers-reduced-motion:reduce){
- *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
- .reveal{opacity:1;transform:none}
+  .bonus-dialog{animation:none}
 }
-</style>
-</head>
-<body>
 
-<header>
- <div class="container nav">
-  <a href="#home" class="logo">OBSIDIAN<span>.</span><small>PERFORMANCE CLUB</small></a>
-  <nav class="navlinks" id="navlinks">
-   <a href="#training">Training</a>
-   <a href="#about">Our approach</a>
-   <a href="#membership">Membership</a>
-   <a href="#bmi">BMI calculator</a>
-   <a href="#contact">Contact</a>
-  </nav>
-  <a href="#membership" class="btn nav-cta">Become a member ↗</a>
-  <button class="menu" id="menu" aria-label="Toggle menu" aria-expanded="false">☰</button>
- </div>
-</header>
-
-<main>
-<section class="hero" id="home">
- <div class="container hero-grid">
-  <div>
-   <div class="eyebrow">◉ The future of training</div>
-   <h1>BUILT<br>BY <span class="outline">EFFORT.</span><br><span class="blue-line">DEFINED</span><br>BY YOU.</h1>
-   <p>Train with purpose in a performance-driven environment built for strength, endurance and the mindset to go further.</p>
-   <div class="actions">
-    <a href="#membership" class="btn">Start training <span>↗</span></a>
-    <a href="#training" class="btn ghost">Explore the club <span>↓</span></a>
-   </div>
-   <div class="stats">
-    <div class="stat"><strong>03</strong><span>Training zones</span></div>
-    <div class="stat"><strong>24/7</strong><span>Commitment</span></div>
-    <div class="stat"><strong>∞</strong><span>Potential</span></div>
-   </div>
-  </div>
-  <div class="visual">
-   <div class="visual-index">OBS / SERIES 001 — FORM IN MOTION</div>
-   <div class="visual-box"></div>
-   <div class="ring"></div><div class="ring second"></div><div class="ring third"></div>
-   <div class="visual-core"><span>O</span></div>
-   <div class="visual-tag one">Performance first</div>
-   <div class="visual-tag two">Make it happen.</div>
-  </div>
- </div>
-</section>
-
-<div class="ticker">
- <div class="ticker-track">
-  <span>Train with purpose ✳</span><span>Build real strength ✳</span><span>Move with intent ✳</span><span>Be your standard ✳</span>
-  <span>Train with purpose ✳</span><span>Build real strength ✳</span><span>Move with intent ✳</span><span>Be your standard ✳</span>
- </div>
-</div>
-
-<section class="section" id="training">
- <div class="container">
-  <div class="heading reveal">
-   <div><div class="eyebrow">01 / Training systems</div><h2 class="title">YOUR GOALS.<br><span class="blue">YOUR METHOD.</span></h2></div>
-   <p>Purposeful programming for different goals, experience levels and training styles. Find your focus and build from there.</p>
-  </div>
-  <div class="workouts">
-   <article class="workout reveal">
-    <div class="workout-num">SYSTEM / 001</div>
-    <div class="workout-symbol">↗</div>
-    <h3>Strength</h3>
-    <p>Build a stronger foundation with progressive resistance training, proper technique and measurable progress.</p>
-    <div class="workout-foot"><span>Power / Muscle</span><b>01</b></div>
-   </article>
-   <article class="workout reveal">
-    <div class="workout-num">SYSTEM / 002</div>
-    <div class="workout-symbol">ϟ</div>
-    <h3>Conditioning</h3>
-    <p>Challenge your stamina through interval sessions, cardio training and full-body workouts.</p>
-    <div class="workout-foot"><span>Cardio / Endurance</span><b>02</b></div>
-   </article>
-   <article class="workout reveal">
-    <div class="workout-num">SYSTEM / 003</div>
-    <div class="workout-symbol">◎</div>
-    <h3>Mobility</h3>
-    <p>Improve balance, movement quality and flexibility to support a more capable, resilient body.</p>
-    <div class="workout-foot"><span>Control / Recovery</span><b>03</b></div>
-   </article>
-  </div>
- </div>
-</section>
-
-<section class="statement" id="about">
- <div class="container">
-  <div class="statement-box reveal">
-   <div>
-    <div class="eyebrow">02 / The obsidian standard</div>
-    <h2>PROGRESS<br>ISN'T GIVEN.<br><span class="blue">IT'S BUILT.</span></h2>
-   </div>
-   <div>
-    <p>Great results come from consistent effort. We bring together purposeful equipment, expert guidance and an environment that makes every session count.</p>
-    <p style="margin-top:14px">Whatever your starting point, your progress is the goal. Build habits, learn your craft and keep showing up.</p>
-    <a class="btn" href="#contact">Find your place <span>↗</span></a>
-   </div>
-  </div>
- </div>
-</section>
-
-<section class="section memberships" id="membership">
- <div class="container">
-  <div class="heading reveal">
-   <div><div class="eyebrow">03 / Club access</div><h2 class="title">CHOOSE YOUR<br><span class="blue">LEVEL.</span></h2></div>
-   <p>Flexible membership options for every stage of your fitness journey. Choose the plan that fits your routine.</p>
-  </div>
-  <div class="plans">
-   <article class="plan reveal">
-    <h3>Core</h3><div class="price">$29<small> / month</small></div>
-    <p class="plan-desc">The essentials to get moving.</p>
-    <ul><li>Gym floor access</li><li>Strength equipment</li><li>Cardio facilities</li><li>Changing rooms</li></ul>
-    <a href="#contact" class="btn ghost">Choose Core ↗</a>
-   </article>
-   <article class="plan popular reveal">
-    <div class="badge">MEMBER FAVOURITE</div>
-    <h3>Plus</h3><div class="price">$59<small> / month</small></div>
-    <p class="plan-desc">More variety in your routine.</p>
-    <ul><li>Everything in Core</li><li>Group fitness classes</li><li>Monthly progress check</li><li>Workout plan guidance</li></ul>
-    <a href="#contact" class="btn">Choose Plus ↗</a>
-   </article>
-   <article class="plan reveal">
-    <h3>Signature</h3><div class="price">$99<small> / month</small></div>
-    <p class="plan-desc">A more personal approach.</p>
-    <ul><li>Everything in Plus</li><li>Personal training session</li><li>Individualised programme</li><li>Priority class booking</li></ul>
-    <a href="#contact" class="btn ghost">Choose Signature ↗</a>
-   </article>
-  </div>
-  <p style="font-size:10px;color:var(--grey);margin-top:18px">Demonstration prices only. Replace with your actual rates, billing conditions and membership terms.</p>
- </div>
-</section>
-
-<section class="section" id="bmi">
- <div class="container bmi-grid">
-  <div class="reveal">
-   <div class="eyebrow">04 / Your baseline</div>
-   <h2 class="title">KNOW YOUR<br><span class="blue">NUMBERS.</span></h2>
-   <p class="bmi-copy">Calculate your Body Mass Index as a general screening measure. BMI does not distinguish muscle from fat and is not a diagnosis or a complete measure of individual health.</p>
-  </div>
-  <div class="bmi-card reveal">
-   <h3>BMI / Quick check</h3>
-   <div class="fields">
-    <div class="field"><label for="height">Height (cm)</label><input type="number" id="height" min="50" max="250" placeholder="175"></div>
-    <div class="field"><label for="weight">Weight (kg)</label><input type="number" id="weight" min="10" max="500" placeholder="75"></div>
-   </div>
-   <button class="btn" id="calculate">Calculate BMI <span>↗</span></button>
-   <div class="result" id="result" aria-live="polite">
-    <div class="eyebrow">Your estimate</div>
-    <strong id="bmiValue">0.0</strong>
-    <p id="bmiStatus"></p>
-   </div>
-   <p class="note">For adults aged 20 and older. BMI ranges are screening references; individual interpretation may differ. Consult a qualified health professional for personalised guidance.</p>
-  </div>
- </div>
-</section>
-
-<section class="contact" id="contact">
- <div class="container contact-row">
-  <div><h2>YOUR NEXT<br>CHAPTER STARTS NOW.</h2><p>Got goals? Let's build a training routine around them.</p></div>
-  <a class="btn" href="mailto:hello@obsidianfitness.com?subject=Membership%20enquiry">Talk to our team <span>↗</span></a>
- </div>
-</section>
-</main>
-
-<footer>
- <div class="container footer-row">
-  <a href="#home" class="logo">OBSIDIAN<span>.</span><small>PERFORMANCE CLUB</small></a>
-  <div class="footer-note">© <span id="year"></span> OBSIDIAN FITNESS. BUILT WITH PURPOSE.</div>
-  <div class="socials"><a href="#">Instagram ↗</a><a href="#">TikTok ↗</a></div>
- </div>
-</footer>
-
-<script>
-const menuButton = document.getElementById('menu');
-const nav = document.getElementById('navlinks');
-
-menuButton.addEventListener('click', () => {
-  const open = nav.classList.toggle('open');
-  menuButton.textContent = open ? '✕' : '☰';
-  menuButton.setAttribute('aria-expanded', String(open));
-});
-
-nav.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuButton.textContent = '☰';
-    menuButton.setAttribute('aria-expanded', 'false');
-  });
-});
-
-document.getElementById('year').textContent = new Date().getFullYear();
-
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
-    }
-  });
-}, {threshold:0.12});
-
-document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-document.getElementById('calculate').addEventListener('click', () => {
-  const height = Number(document.getElementById('height').value);
-  const weight = Number(document.getElementById('weight').value);
-
-  if (!height || !weight || height < 50 || height > 250 || weight < 10 || weight > 500) {
-    alert('Enter a valid height (50–250 cm) and weight (10–500 kg).');
-    return;
+@media(max-width:768px){
+  .container{
+    flex-direction:column-reverse;
   }
 
-  const bmi = weight / ((height / 100) ** 2);
-  let status;
+  .demo,
+  .right{
+    width:100%;
+  }
 
-  if (bmi < 18.5) status = 'Below the usual adult reference range.';
-  else if (bmi < 25) status = 'Within the usual adult reference range.';
-  else if (bmi < 30) status = 'Above the usual adult reference range.';
-  else status = 'In the high adult BMI range.';
+  iframe{
+    height:500px;
+  }
 
-  document.getElementById('bmiValue').textContent = bmi.toFixed(1);
-  document.getElementById('bmiStatus').textContent = status;
-  document.getElementById('result').style.display = 'block';
+  .right{
+    padding:20px;
+  }
+}
+
+@media(max-width:480px){
+  h1{
+    font-size:28px;
+  }
+
+  .sub{
+    font-size:16px;
+  }
+
+  .feature{
+    font-size:16px;
+    padding:12px;
+  }
+
+  .signup-btn{
+    font-size:14px;
+    padding:8px 13px;
+  }
+
+  .cta{
+    font-size:18px;
+    padding:15px;
+  }
+
+  .website-row{
+    flex-direction:column;
+    gap:8px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="bonus-popup" id="bonusPopup" role="dialog" aria-modal="true" aria-labelledby="bonusTitle">
+  <div class="bonus-dialog">
+    <button class="bonus-close" id="bonusClose" type="button" aria-label="Close bonus popup">&times;</button>
+    <h2 id="bonusTitle">Claim 10% Bonus</h2>
+    <p>Sign up now and get started with the deposit bonus.</p>
+    <a class="bonus-claim" href="https://www.multicric.com/?code=266ICE">🔥 Claim Bonus &amp; Sign Up</a>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="demo">
+    <a href="http://www.multicric.com/?code=161sky" target="_blank" rel="noopener noreferrer" class="floating-signup">🔥 CLICK ON SIGNUP 🔥</a>
+    <iframe src="https://www.multicric.com/?code=266ICE"></iframe>
+  </div>
+
+  <div class="right">
+    <div class="box">
+
+  <div class="badge">AUTO WEBSITE</div>
+
+  <h1>Get Your ID Now</h1>
+
+  <p class="sub">
+    Fast auto website service with easy deposit support.
+    New users can start quickly through WhatsApp.
+  </p>
+
+  <div class="features">
+
+    <div class="feature">
+      Minimum Deposit: <span>₹100 Only</span>
+    </div>
+
+    <div class="feature">
+      Welcome Bonus: <span>10%</span>
+    </div>
+
+    <div class="feature">
+      Auto Website Support:
+      <a
+        class="signup-btn"
+        href="https://www.multicric.com/?code=266ICE"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Click on Signup
+      </a>
+    </div>
+
+    <div class="feature">
+      Quick Help:
+      <span>Deposit &amp; Withdrawal Support</span>
+    </div>
+
+  </div>
+
+  <div class="website-row">
+
+    <a
+      class="website"
+      href="https://www.multicric.com/?code=266ICE"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      🌐 https://www.multicric.com/?code=266ICE
+    </a>
+
+    <a
+      class="whatsapp-small"
+      href="https://wa.me/+447366954216"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      💬 WhatsApp
+    </a>
+
+  </div>
+
+  <a
+    class="cta"
+    href="https://wa.me/+447366954216?text=Hello%20I%20want%20new%20multicric%20ID"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    📲 WhatsApp Now
+  </a>
+
+  <p class="trust">
+    ✅ Trusted multicric Support<br>
+    ✅ Simple Process<br>
+    ✅ Fast Response
+  </p>
+
+  <div class="footer">
+    18+ Only | Play Responsibly | Follow Your Local Laws | T&amp;C Apply
+  </div>
+
+</div>
+
+  </div>
+
+</div>
+
+<script>
+const bonusPopup = document.getElementById('bonusPopup');
+const bonusClose = document.getElementById('bonusClose');
+
+function closeBonusPopup(){
+  bonusPopup.hidden = true;
+}
+
+bonusClose.addEventListener('click', closeBonusPopup);
+bonusPopup.addEventListener('click', (event) => {
+  if(event.target === bonusPopup) closeBonusPopup();
+});
+document.addEventListener('keydown', (event) => {
+  if(event.key === 'Escape') closeBonusPopup();
 });
 </script>
+
 </body>
 </html>
-```
